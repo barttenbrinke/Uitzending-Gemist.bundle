@@ -270,8 +270,8 @@ def PlayVideo(sender, real_episode_id):
       stream = XML.ElementFromURL(STREAM_URL % (real_episode_id, GetHash(real_episode_id)), cacheTime=1).xpath('/streams/stream[@compressie_formaat="wmv" and @compressie_kwaliteit="bb"]/streamurl')[0].text.strip()
     except:
       stream = XML.ElementFromURL(STREAM_URL % (real_episode_id, GetHash(real_episode_id)), cacheTime=1).xpath('/streams/stream[@compressie_formaat="wmv" and @compressie_kwaliteit="sb"]/streamurl')[0].text.strip()
-  
-  return Redirect(WindowsMediaVideoURL(stream))
+
+  return Redirect(WindowsMediaVideoItem(stream))
 
 ###################################################################################################
 def Thumb(url, alt_url, mimetype='image/jpeg'):
