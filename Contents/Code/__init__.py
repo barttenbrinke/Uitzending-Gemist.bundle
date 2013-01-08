@@ -56,9 +56,13 @@ def Recent(title):
 ####################################################################################################
 def BrowseByDay(title, url, page=1):
 
-	url = '%s&page=%d' % (url, page)
-	html = HTML.ElementFromURL(url)
 	ids = []
+	url = '%s&page=%d' % (url, page)
+
+	try:
+		html = HTML.ElementFromURL(url)
+	except:
+		return ObjectContainer(header="Error", message="Er ging iets fout bij het ophalen van data")
 
 	for episode_url in html.xpath('//a[contains(@href, "/afleveringen/") and @title=""]/@href'):
 		episode_id = episode_url.split('/')[-1]
@@ -102,6 +106,7 @@ def Episodes(title, ids):
 					pass
 
 	for id in ids:
-		oc.add(result[id])
+		if id in result:
+			oc.add(result[id])
 
 	return oc
