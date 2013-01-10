@@ -42,7 +42,7 @@ def Recent(title):
 
 	oc = ObjectContainer(title2=title, view_group='List')
 
-	for day in HTML.ElementFromURL(BASE_URL).xpath('//ol[@id="daystoggle"]/li/a'):
+	for day in HTML.ElementFromURL(BASE_URL).xpath('//ol[@id="daystoggle"]/li/a')[:7]:
 		title = day.text.replace('  ', ' ').strip()
 		url = '%s%s?_pjax=true' % (BASE_URL, day.get('href'))
 
