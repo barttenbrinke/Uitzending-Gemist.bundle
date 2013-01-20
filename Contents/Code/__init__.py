@@ -34,10 +34,12 @@ def MainMenu():
 #	oc.add(DirectoryObject(key=Callback(Broadcaster, title='Programma\'s per Omroep'), title='Programma\'s per Omroep'))
 #	oc.add(DirectoryObject(key=Callback(Genre, title='Programma\'s per Genre'), title='Programma\'s per Genre'))
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
+	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', thumb=R('search.png')))
 
 	return oc
 
 ####################################################################################################
+@route('/video/uzg/recent')
 def Recent(title):
 
 	oc = ObjectContainer(title2=title, view_group='List')
@@ -54,6 +56,7 @@ def Recent(title):
 	return oc
 
 ####################################################################################################
+@route('/video/uzg/browse/day')
 def BrowseByDay(title, url, page=1):
 
 	ids = []
