@@ -45,7 +45,7 @@ def Recent(title):
 	return oc
 
 ####################################################################################################
-@route('/video/uzg/browse/day')
+@route('/video/uzg/browse/day', page=int)
 def BrowseByDay(title, url, page=1):
 
 	ids = []
