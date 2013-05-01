@@ -1,7 +1,4 @@
 TITLE = 'Uitzending Gemist'
-ART = 'art-default.jpg'
-ICON = 'icon-default.png'
-
 BASE_URL = 'http://www.uitzendinggemist.nl'
 EPISODE_URL = '%s/afleveringen/%%s' % BASE_URL
 
@@ -12,20 +9,12 @@ def Start():
 	Plugin.AddViewGroup('InfoList', viewMode='InfoList', mediaType='items')
 
 	ObjectContainer.title1 = TITLE
-	ObjectContainer.art = R(ART)
-	DirectoryObject.thumb = R(ICON)
-	DirectoryObject.art = R(ART)
-	NextPageObject.thumb = R(ICON)
-	NextPageObject.art = R(ART)
-	VideoClipObject.thumb = R(ICON)
-	VideoClipObject.art = R(ART)
-
 	HTTP.CacheTime = CACHE_1HOUR
 	HTTP.Headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 Safari/536.26.17'
 	HTTP.Headers['Cookie'] = 'site_cookie_consent=yes'
 
 ####################################################################################################
-@handler('/video/uzg', TITLE, art=ART, thumb=ICON)
+@handler('/video/uzg', TITLE)
 def MainMenu():
 
 	oc = ObjectContainer()
@@ -34,7 +23,7 @@ def MainMenu():
 #	oc.add(DirectoryObject(key=Callback(Broadcaster, title='Programma\'s per Omroep'), title='Programma\'s per Omroep'))
 #	oc.add(DirectoryObject(key=Callback(Genre, title='Programma\'s per Genre'), title='Programma\'s per Genre'))
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
-	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', thumb=R('search.png')))
+	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen'))
 
 	return oc
 
