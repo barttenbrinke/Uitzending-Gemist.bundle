@@ -1,6 +1,6 @@
 TITLE = 'Uitzending Gemist'
 BASE_URL = 'http://www.uitzendinggemist.nl'
-EPISODE_URL = '%s/afleveringen/%%s' % BASE_URL
+EPISODE_URL = '%s/afleveringen/%%s#%%s;%%s' % BASE_URL
 
 ####################################################################################################
 def Start():
@@ -82,6 +82,8 @@ def Episodes(title, ids):
 
 	oc = ObjectContainer(title2=title, view_group='InfoList')
 	result = {}
+	client_platform = Client.Platform
+	client_version = Client.Version
 
 	@parallelize
 	def GetEpisodes():
@@ -92,13 +94,12 @@ def Episodes(title, ids):
 			def GetEpisode(result=result, id=id):
 
 				try:
-					video = URLService.MetadataObjectForURL(EPISODE_URL % id)
-					result[id] = video
+					result[id] = URLService.MetadataObjectForURL(EPISODE_URL % (id, client_platform, client_version))
 				except:
-					pass
+					result[id] = None
 
 	for id in ids:
-		if id in result:
+		if id in result and result[id] is not None:
 			oc.add(result[id])
 
 	return oc

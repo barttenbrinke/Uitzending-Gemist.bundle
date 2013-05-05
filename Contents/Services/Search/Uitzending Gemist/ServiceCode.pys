@@ -1,6 +1,6 @@
 BASE_URL = 'http://www.uitzendinggemist.nl'
 SEARCH_URL = '%s/zoek/uitzendingen?q=%%s&_pjax=true' % BASE_URL
-EPISODE_URL = '%s/afleveringen/%%s' % BASE_URL
+EPISODE_URL = '%s/afleveringen/%%s#%%s;%%s' % BASE_URL
 
 HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 Safari/536.26.17',
@@ -11,6 +11,9 @@ HEADERS = {
 def Search(query):
 
 	oc = ObjectContainer(title1='Uitzending Gemist', title2='Zoekresultaten')
+	client_platform = Client.Platform
+	client_version = Client.Version
+
 	ids = []
 	url = SEARCH_URL % String.Quote(query)
 
@@ -26,7 +29,7 @@ def Search(query):
 			ids.append(episode_id)
 
 			try:
-				video = URLService.MetadataObjectForURL(EPISODE_URL % episode_id)
+				video = URLService.MetadataObjectForURL(EPISODE_URL % (episode_id, client_platform, client_version))
 				oc.add(video)
 			except:
 				pass
