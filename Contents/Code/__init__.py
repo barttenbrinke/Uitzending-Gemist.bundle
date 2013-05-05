@@ -23,7 +23,7 @@ def MainMenu():
 #	oc.add(DirectoryObject(key=Callback(Broadcaster, title='Programma\'s per Omroep'), title='Programma\'s per Omroep'))
 #	oc.add(DirectoryObject(key=Callback(Genre, title='Programma\'s per Genre'), title='Programma\'s per Genre'))
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
-	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen'))
+	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', term='Uitzendingen'))
 
 	return oc
 
