@@ -89,6 +89,7 @@ def Episodes(title, ids):
 	def GetEpisodes():
 
 		for id in ids:
+			result[id] = None
 
 			@task
 			def GetEpisode(result=result, id=id):
@@ -96,10 +97,10 @@ def Episodes(title, ids):
 				try:
 					result[id] = URLService.MetadataObjectForURL(EPISODE_URL % (id, client_platform, client_version))
 				except:
-					result[id] = None
+					pass
 
 	for id in ids:
-		if id in result and result[id] is not None:
+		if result[id] is not None:
 			oc.add(result[id])
 
 	return oc
