@@ -23,7 +23,10 @@ def MainMenu():
 #	oc.add(DirectoryObject(key=Callback(Broadcaster, title='Programma\'s per Omroep'), title='Programma\'s per Omroep'))
 #	oc.add(DirectoryObject(key=Callback(Genre, title='Programma\'s per Genre'), title='Programma\'s per Genre'))
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
-	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', term='Uitzendingen'))
+
+	# Do not show search on Rokus. Search finds mostly older videos which are all in M4V format (not HLS) and Roku playback always fails.
+	if Client.Platform not in ('Roku'):
+		oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', term='Uitzendingen'))
 
 	return oc
 
@@ -31,7 +34,7 @@ def MainMenu():
 @route('/video/uzg/recent')
 def Recent(title):
 
-	oc = ObjectContainer(title2=title, view_group='List')
+	oc = ObjectContainer(title2=title, view_group='List', no_cache=True)
 
 	for day in HTML.ElementFromURL(BASE_URL).xpath('//ol[@id="daystoggle"]/li/a')[:7]:
 		title = day.text.replace('  ', ' ').strip()
@@ -80,10 +83,10 @@ def BrowseByDay(title, url, page=1):
 ####################################################################################################
 def Episodes(title, ids):
 
-	oc = ObjectContainer(title2=title, view_group='InfoList')
+	oc = ObjectContainer(title2=title, view_group='InfoList', no_cache=True)
 	result = {}
-	client_platform = Client.Platform
-	client_version = Client.Version
+	client_platform = Client.Platform if Client.Platform is not None else ''
+	client_version = Client.Version if Client.Version is not None else ''
 
 	@parallelize
 	def GetEpisodes():

@@ -11,8 +11,8 @@ HEADERS = {
 def Search(query):
 
 	oc = ObjectContainer(title1='Uitzending Gemist', title2='Zoekresultaten')
-	client_platform = Client.Platform
-	client_version = Client.Version
+	client_platform = Client.Platform if Client.Platform is not None else ''
+	client_version = Client.Version if Client.Version is not None else ''
 
 	ids = []
 	url = SEARCH_URL % String.Quote(query)
@@ -29,8 +29,7 @@ def Search(query):
 			ids.append(episode_id)
 
 			try:
-				video = URLService.MetadataObjectForURL(EPISODE_URL % (episode_id, client_platform, client_version))
-				oc.add(video)
+				oc.add(URLService.MetadataObjectForURL(EPISODE_URL % (episode_id, client_platform, client_version)))
 			except:
 				pass
 
