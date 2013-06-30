@@ -11,7 +11,7 @@ def Start():
 	ObjectContainer.title1 = TITLE
 	HTTP.CacheTime = CACHE_1HOUR
 	HTTP.Headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/536.26.17 (KHTML, like Gecko) Version/6.0.2 Safari/536.26.17'
-	HTTP.Headers['Cookie'] = 'site_cookie_consent=yes'
+	HTTP.Headers['Cookie'] = 'npo_cc=30'
 
 ####################################################################################################
 @handler('/video/uzg', TITLE)
