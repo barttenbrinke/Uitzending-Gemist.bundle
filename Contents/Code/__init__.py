@@ -1,6 +1,6 @@
 TITLE = 'Uitzending Gemist'
 BASE_URL = 'http://www.uitzendinggemist.nl'
-EPISODE_URL = '%s/afleveringen/%%s#%%s;%%s' % BASE_URL
+EPISODE_URL = '%s/afleveringen/%%s' % BASE_URL
 
 ####################################################################################################
 def Start():
@@ -25,8 +25,8 @@ def MainMenu():
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
 
 	# Do not show search on Rokus. Search finds mostly older videos which are all in M4V format (not HLS) and Roku playback always fails.
-	if Client.Platform not in ('Roku'):
-		oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', term='Uitzendingen'))
+	#if Client.Platform not in ('Roku'):
+	#	oc.add(SearchDirectoryObject(identifier='com.plexapp.plugins.uzgv2', title='Zoeken', prompt='Zoek uitzendingen', term='Uitzendingen'))
 
 	return oc
 
@@ -85,8 +85,6 @@ def Episodes(title, ids):
 
 	oc = ObjectContainer(title2=title, view_group='InfoList', no_cache=True)
 	result = {}
-	client_platform = Client.Platform if Client.Platform is not None else ''
-	client_version = Client.Version if Client.Version is not None else ''
 
 	@parallelize
 	def GetEpisodes():
@@ -98,7 +96,7 @@ def Episodes(title, ids):
 			def GetEpisode(result=result, id=id):
 
 				try:
-					result[id] = URLService.MetadataObjectForURL(EPISODE_URL % (id, client_platform, client_version))
+					result[id] = URLService.MetadataObjectForURL(EPISODE_URL % id)
 				except:
 					pass
 
