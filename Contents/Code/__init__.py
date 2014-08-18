@@ -1,5 +1,5 @@
 TITLE = 'Uitzending Gemist'
-BASE_URL = 'http://www.uitzendinggemist.nl'
+BASE_URL = 'http://www.npo.nl/uitzending-gemist'
 EPISODE_URL = '%s/afleveringen/%%s' % BASE_URL
 
 ####################################################################################################
@@ -19,7 +19,7 @@ def MainMenu():
 
 	oc = ObjectContainer()
 
-	oc.add(DirectoryObject(key=Callback(Recent, title='Afgelopen 7 dagen'), title='Afgelopen 7 dagen'))
+	oc.add(DirectoryObject(key=Callback(PopularLastWeek, title='Afgelopen 7 dagen'), title='Afgelopen 7 dagen'))
 #	oc.add(DirectoryObject(key=Callback(Broadcaster, title='Programma\'s per Omroep'), title='Programma\'s per Omroep'))
 #	oc.add(DirectoryObject(key=Callback(Genre, title='Programma\'s per Genre'), title='Programma\'s per Genre'))
 #	oc.add(DirectoryObject(key=Callback(AtoZ, title='Programma\'s A-Z'), title='Programma\'s A-Z'))
@@ -31,19 +31,22 @@ def MainMenu():
 	return oc
 
 ####################################################################################################
-@route('/video/uzg/recent')
-def Recent(title):
+@route('/video/uzg/popular_last_week')
+def PopularLastWeek(title):
 
 	oc = ObjectContainer(title2=title, view_group='List', no_cache=True)
 
-	for day in HTML.ElementFromURL(BASE_URL).xpath('//ol[@id="daystoggle"]/li/a')[:7]:
-		title = day.text.replace('  ', ' ').strip()
-		url = '%s%s?_pjax=true' % (BASE_URL, day.get('href'))
+	last_week_url = BASE_URL + '/meest-bekeken?date=last_week'
 
+	for tile in HTML.ElementFromURL(last_week_url).xpath('//div[@class="list-item tile"]')[:]:
+		title = tile.xpath('.//h4/@title')[0]
+		relative_url = tile.xpath('.//a[@data-tracker="tekstlink"]')[0].get('href')
+		absolute_url = BASE_URL + relative_url
 		oc.add(DirectoryObject(
-			key = Callback(BrowseByDay, title=title, url=url),
+			key = Callback(BrowseByDay, title=title, url=absolute_url),
 			title = title
 		))
+		# oc.add(URLService.MetadataObjectForURL(absolute_url))
 
 	return oc
 
