@@ -10,7 +10,7 @@ def Start():
 
 	ObjectContainer.title1 = TITLE
 	HTTP.CacheTime = CACHE_1HOUR
-	HTTP.Headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/536.30.1 (KHTML, like Gecko) Version/6.0.5 Safari/536.30.1'
+	HTTP.Headers['User-Agent'] = 'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53'
 	HTTP.Headers['Cookie'] = 'npo_cc=30'
 
 ####################################################################################################
@@ -46,7 +46,6 @@ def PopularLastWeek(title):
 			key = Callback(BrowseByDay, title=title, url=absolute_url),
 			title = title
 		))
-		# oc.add(URLService.MetadataObjectForURL(absolute_url))
 
 	return oc
 
